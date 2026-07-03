@@ -99,3 +99,42 @@ class AchievementCat(models.Model):
 
     def __str__(self):
         return f'{self.achievement} {self.cat}'
+
+
+class CatFamilyRelation(models.Model):
+    RELATION_CHOICES = (
+        ('mother', 'Мать'),
+        ('father', 'Отец'),
+        ('parent', 'Родитель'),
+        ('guardian', 'Опекун'),
+    )
+
+    parent = models.ForeignKey(
+        Cat,
+        related_name='children_relations',
+        on_delete=models.CASCADE
+    )
+    child = models.ForeignKey(
+        Cat,
+        related_name='parent_relations',
+        on_delete=models.CASCADE
+    )
+    relation_type = models.CharField(
+        max_length=16,
+        choices=RELATION_CHOICES,
+        default='parent'
+    )
+    note = models.CharField(max_length=256, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=('parent', 'child'),
+                name='unique_cat_parent_child'
+            ),
+        ]
+        ordering = ('parent__name', 'child__name')
+
+    def __str__(self):
+        return f'{self.parent.name} -> {self.child.name}'

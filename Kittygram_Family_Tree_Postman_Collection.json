@@ -1,0 +1,108 @@
+{
+  "info": {
+    "name": "Kittygram Family Tree API",
+    "description": "Postman collection for checking Kittygram cat family tree endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Family relations list",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/cat-family-relations/"
+      }
+    },
+    {
+      "name": "Create mother relation",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"parent\": 1,\n  \"child\": 3,\n  \"relation_type\": \"mother\",\n  \"note\": \"Основная линия семейного древа\"\n}"
+        },
+        "url": "{{base_url}}/api/cat-family-relations/"
+      }
+    },
+    {
+      "name": "Create father relation",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"parent\": 2,\n  \"child\": 3,\n  \"relation_type\": \"father\",\n  \"note\": \"Вторая ветка семейного древа\"\n}"
+        },
+        "url": "{{base_url}}/api/cat-family-relations/"
+      }
+    },
+    {
+      "name": "Cat family tree",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/cats/3/family-tree/"
+      }
+    },
+    {
+      "name": "Cat ancestors",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/cats/3/ancestors/"
+      }
+    },
+    {
+      "name": "Cat descendants",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/cats/1/descendants/"
+      }
+    },
+    {
+      "name": "Validation error: parent is younger",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"parent\": 3,\n  \"child\": 1,\n  \"relation_type\": \"mother\"\n}"
+        },
+        "url": "{{base_url}}/api/cat-family-relations/"
+      }
+    }
+  ]
+}

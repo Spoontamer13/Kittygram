@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from cats.views import (
-    CatViewSet, UserViewSet, AchievementViewSet, LightCatViewSet, ShelterViewSet
+    CatFamilyRelationViewSet, CatViewSet, UserViewSet, AchievementViewSet,
+    LightCatViewSet, ShelterViewSet
 )
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
@@ -12,6 +13,7 @@ router.register('users', UserViewSet)
 router.register('achievements', AchievementViewSet)
 router.register('mycats', LightCatViewSet)
 router.register('shelters', ShelterViewSet)
+router.register('cat-family-relations', CatFamilyRelationViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
